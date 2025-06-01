@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mantis/pages/responsive/web_dashboard.dart';
+import 'package:mantis/pages/responsive/mobile_dashboard.dart';
+import 'package:mantis/pages/responsive/responsive_layout.dart';
 import 'package:mantis/pages/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +14,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  bool _keepSignedIn = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,282 +32,379 @@ class _LoginPageState extends State<LoginPage> {
       ),
 
       backgroundColor: Colors.white,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double maxWidth = constraints.maxWidth;
-          return Padding(
-            padding: EdgeInsets.only(top: 200),
-            child: SingleChildScrollView( 
-              child: Center(
-                child: Container(
-                  width: maxWidth > 650 ? 500 : maxWidth * 0.9,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(width: 1, color: Colors.grey),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignUpPage(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Don\'t have an account?',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              double maxWidth = constraints.maxWidth;
+              return Padding(
+                padding: EdgeInsets.only(top: 200),
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Container(
+                      width: maxWidth > 650 ? 500 : maxWidth * 0.9,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 1, color: Colors.grey),
                       ),
 
-                      SizedBox(height: 25),
-
-                      Text(
-                        'Username',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      TextField(
-                        controller: _userNameController,
-                        decoration: InputDecoration(
-                          hintText: 'Username',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Text(
-                        'Password',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Checkbox(
-                                value: false,
-                                onChanged: (value) {
-                                  value != value;
-                                },
+                              Flexible(
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-
-                              Text(
-                                'Keep me sign in',
-                                style: TextStyle(fontSize: 18),
+                              Flexible(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignUpPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Don\'t have an account?',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.blue,
+                                    ),
+                                    softWrap: true,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.black,
+
+                          SizedBox(height: 25),
+
+                          Text(
+                            'Username',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+
+                          TextField(
+                            controller: _userNameController,
+                            decoration: InputDecoration(
+                              hintText: 'Username',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
 
-                      SizedBox(height: 20),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.blue,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(color: Colors.white),
+                          SizedBox(height: 10),
+
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
-                        ),
-                      ),
+                          SizedBox(height: 10),
 
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              'Login with',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 20),
-
-                      Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
+                          TextField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.grey,
                                 ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 10),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.asset(
-                                      'assets/google.png',
-                                      width: 20,
-                                      height: 20,
+                                    Checkbox(
+                                      activeColor: Colors.blue,
+                                      value: _keepSignedIn,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _keepSignedIn = value!;
+                                        });
+                                      },
                                     ),
-                                    SizedBox(width: 8),
-                                    Text('Google'),
+                                    Flexible(
+                                      child: Text(
+                                        'Keep me sign in',
+                                        style: TextStyle(fontSize: 18),
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/twitter.png',
-                                      width: 20,
-                                      height: 20,
+                              Flexible(
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Forgot Password?',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black,
                                     ),
-                                    SizedBox(width: 8),
-                                    Text('Twitter'),
-                                  ],
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 20),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (_) => ResponsiveLayout(
+                                        webDashboard: WebDashBoard(),
+                                        mobileDashboard: MobileDashboard(),
+                                      ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.blue,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/facebook.png',
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text('Facebook'),
-                                  ],
+
+                          SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey[300],
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text(
+                                  'Login with',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+
+                              Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey[300],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 20),
+
+                          Row(
+                            children: [
+                              // Google Button
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          'assets/google.png',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Flexible(
+                                          child: Text(
+                                            'Google',
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 12),
+
+                              // Twitter Button
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          'assets/twitter.png',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Flexible(
+                                          child: Text(
+                                            'Twitter',
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 12),
+
+                              // Facebook Button
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          'assets/facebook.png',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Flexible(
+                                          child: Text(
+                                            'Facebook',
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
+              );
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Text(
+                'Copyright © 2025 SohClick Technology',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
               ),
             ),
-          );
-        },
+            SizedBox(width: 16),
+            Flexible(
+              child: Text(
+                'Home Privacy Policy Contact us',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

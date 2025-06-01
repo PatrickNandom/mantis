@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mantis/pages/responsive/web_dashboard.dart';
 import 'package:mantis/pages/login_page.dart';
+import 'package:mantis/pages/responsive/mobile_dashboard.dart';
+import 'package:mantis/pages/responsive/responsive_layout.dart';
 import 'package:mantis/widgets/custom_text_field.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -22,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _passwordController = TextEditingController();
 
   final _orgNameController = TextEditingController();
-  final _orgDescrriptionController = TextEditingController();
+  final _orgDescriptionController = TextEditingController();
 
   final _orgEmailController = TextEditingController();
   final _orgPhoneController = TextEditingController();
@@ -53,33 +56,39 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'SignUp',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Text(
+                              'SignUp',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Already have an account?',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.blue,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              'Already have an account?',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blue,
+                                softWrap: true,
                               ),
                             ),
                           ),
                         ],
                       ),
+
                       SizedBox(height: 20),
 
                       Text(
@@ -199,7 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: CustomTextField(
                               labelName: 'Description',
                               hintText: 'Description',
-                              controller: _orgDescrriptionController,
+                              controller: _orgDescriptionController,
                             ),
                           ),
                         ],
@@ -249,7 +258,18 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(height: 10),
 
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (_) => ResponsiveLayout(
+                                    webDashboard: WebDashBoard(),
+                                    mobileDashboard: MobileDashboard(),
+                                  ),
+                            ),
+                          );
+                        },
                         child: Container(
                           padding: EdgeInsets.all(8),
                           width: double.infinity,
