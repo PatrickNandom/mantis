@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mantis/widgets/footer.dart';
+import 'package:mantis/widgets/sidebar.dart';
 import 'package:mantis/widgets/start_card.dart';
+import 'package:mantis/widgets/topbar.dart';
 
 class WebDashBoard extends StatelessWidget {
   const WebDashBoard({super.key});
@@ -11,169 +14,14 @@ class WebDashBoard extends StatelessWidget {
       body: Row(
         children: [
           // Sidebar
-          Container(
-            width: 250,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(right: BorderSide(width: 1, color: Colors.grey)),
-            ),
-
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DrawerHeader(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset('assets/logo.png', height: 40, width: 40),
-                          SizedBox(width: 8),
-                          Text(
-                            'Mantis',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      Text('Dashboard'),
-                    ],
-                  ),
-                ),
-                _buildMenuItem(Icons.access_time, 'Default'),
-
-                ListTile(
-                  title: Text(
-                    'Farm Management',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                _buildMenuItem(Icons.people, 'Customers'),
-                _buildMenuItem(Icons.attach_money, 'Income'),
-                _buildMenuItem(Icons.language_sharp, 'Expenses'),
-                ListTile(
-                  title: Text('Reports', style: TextStyle(fontSize: 18)),
-                ),
-                _buildMenuItem(Icons.settings, 'Sales Expenses'),
-                ListTile(
-                  title: Text('Uploads', style: TextStyle(fontSize: 18)),
-                ),
-                _buildMenuItem(Icons.settings, 'Upload Expenses'),
-                _buildMenuItem(Icons.settings, 'Upload Income'),
-              ],
-            ),
-          ),
+          Sidebar(),
 
           // Main content area
           Expanded(
             child: Column(
               children: [
                 // Top bar
-                Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                      bottom: BorderSide(width: 1, color: Colors.grey),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset('assets/appbar_left_icon.png'),
-                          SizedBox(width: 12),
-                          SizedBox(
-                            height: 30,
-                            width: 200,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 5,
-                                ),
-                                hintText: 'Ctrl + K',
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  size: 20,
-                                  color: Colors.grey,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Image.asset('assets/github_icon.png'),
-                          SizedBox(width: 10),
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Icon(
-                                Icons.notifications_outlined,
-                                size: 28,
-                                color: Colors.black,
-                              ),
-                              Positioned(
-                                right: -2,
-                                top: -8,
-                                child: Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    shape: BoxShape.circle,
-                                  ),
-
-                                  child: Center(
-                                    child: Text(
-                                      '3',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: 10),
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 182, 218, 247),
-                              shape: BoxShape.circle,
-                            ),
-
-                            child: Center(child: Icon(Icons.person, size: 20)),
-                          ),
-
-                          SizedBox(width: 10),
-                          Text(
-                            'John Doe',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(width: 10),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                Topbar(),
 
                 // Main content
                 Expanded(
@@ -371,54 +219,9 @@ class WebDashBoard extends StatelessWidget {
         ],
       ),
 
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            'Copyright © SohClick Technology Ltd',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-
-          Row(
-            children: [
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Home',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-
-              SizedBox(width: 10),
-
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Privacy Policy',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(width: 10),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Contact us',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+      bottomNavigationBar: Footer(),
     );
   }
 
   // Sidebar menu item
-  Widget _buildMenuItem(IconData icon, String title) {
-    return ListTile(
-      leading: Icon(icon, size: 18),
-      title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-      onTap: () {},
-    );
-  }
 }
